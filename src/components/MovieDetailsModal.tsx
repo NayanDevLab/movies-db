@@ -105,7 +105,6 @@ export default function MovieDetailsModal() {
     closeDetailsModal();
   };
 
-
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!reviewText.trim()) return;

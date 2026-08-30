@@ -20,13 +20,8 @@ import {
 import BookingHistoryModal from './BookingHistoryModal';
 
 export default function Navbar() {
-  const {
-    filters,
-    setSearchQuery,
-    setSelectedActorProfile,
-    setSelectedIndustry,
-    resetFilters,
-  } = useFilters();
+  const { filters, setSearchQuery, setSelectedActorProfile, setSelectedIndustry, resetFilters } =
+    useFilters();
   const {
     totalSeatsCount,
     openCart,
@@ -65,10 +60,7 @@ export default function Navbar() {
   // Click outside listener
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (
-        searchContainerRef.current &&
-        !searchContainerRef.current.contains(e.target as Node)
-      ) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
         setIsSearchDropdownOpen(false);
       }
     }
@@ -171,44 +163,47 @@ export default function Navbar() {
             </div>
 
             {/* Live Autocomplete Suggestions (Actors & Titles) */}
-            {isSearchDropdownOpen && filters.searchQuery.trim().length > 0 && suggestedActors.length > 0 && (
-              <div className="absolute top-full mt-2 left-0 right-0 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-2.5 z-50 animate-fadeIn space-y-2">
-                <div className="text-[10px] uppercase font-bold text-cyan-400 px-2 py-0.5 flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5" /> Matching Celebrities & Actors (Click to View Filmography)
-                </div>
+            {isSearchDropdownOpen &&
+              filters.searchQuery.trim().length > 0 &&
+              suggestedActors.length > 0 && (
+                <div className="absolute top-full mt-2 left-0 right-0 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-2.5 z-50 animate-fadeIn space-y-2">
+                  <div className="text-[10px] uppercase font-bold text-cyan-400 px-2 py-0.5 flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5" /> Matching Celebrities & Actors (Click to View
+                    Filmography)
+                  </div>
 
-                <div className="space-y-1">
-                  {suggestedActors.map((actor) => (
-                    <button
-                      key={actor.id}
-                      onClick={() => handleSelectActorFromSearch(actor)}
-                      className="w-full p-2 rounded-xl text-left hover:bg-slate-800 flex items-center gap-2.5 transition-colors group"
-                    >
-                      <img
-                        src={
-                          actor.image?.medium ||
-                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
-                        }
-                        alt={actor.name}
-                        className="w-8 h-8 rounded-full object-cover border border-slate-700 flex-shrink-0 group-hover:border-cyan-400"
-                        onError={(e) => {
-                          (e.target as HTMLElement).style.display = 'none';
-                        }}
-                      />
-                      <div className="overflow-hidden">
-                        <div className="text-xs font-bold text-white group-hover:text-cyan-300 truncate">
-                          {actor.name}
+                  <div className="space-y-1">
+                    {suggestedActors.map((actor) => (
+                      <button
+                        key={actor.id}
+                        onClick={() => handleSelectActorFromSearch(actor)}
+                        className="w-full p-2 rounded-xl text-left hover:bg-slate-800 flex items-center gap-2.5 transition-colors group"
+                      >
+                        <img
+                          src={
+                            actor.image?.medium ||
+                            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+                          }
+                          alt={actor.name}
+                          className="w-8 h-8 rounded-full object-cover border border-slate-700 flex-shrink-0 group-hover:border-cyan-400"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = 'none';
+                          }}
+                        />
+                        <div className="overflow-hidden">
+                          <div className="text-xs font-bold text-white group-hover:text-cyan-300 truncate">
+                            {actor.name}
+                          </div>
+                          <div className="text-[10px] text-slate-400 truncate">
+                            {actor.country?.name ? `${actor.country.name}` : 'Star'}
+                            {actor.birthday ? ` • Born ${actor.birthday.slice(0, 4)}` : ''}
+                          </div>
                         </div>
-                        <div className="text-[10px] text-slate-400 truncate">
-                          {actor.country?.name ? `${actor.country.name}` : 'Star'}
-                          {actor.birthday ? ` • Born ${actor.birthday.slice(0, 4)}` : ''}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
 
           {/* Right Action Icons */}

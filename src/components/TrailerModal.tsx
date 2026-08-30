@@ -55,7 +55,11 @@ export default function TrailerModal() {
           <div className="flex items-center gap-3 text-xs text-slate-300">
             <div className="flex items-center gap-1 text-amber-400 font-bold">
               <Star className="w-3.5 h-3.5 fill-amber-400" />
-              <span>{selectedTrailerMovie.rating?.average ? selectedTrailerMovie.rating.average.toFixed(1) : '8.8'}</span>
+              <span>
+                {selectedTrailerMovie.rating?.average
+                  ? selectedTrailerMovie.rating.average.toFixed(1)
+                  : '8.8'}
+              </span>
             </div>
             <span>•</span>
             <span>{selectedTrailerMovie.genres?.join(', ')}</span>

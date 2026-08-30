@@ -3,20 +3,25 @@
 import React, { useState, useEffect } from 'react';
 import { Movie } from '../types/movie';
 import { useCart } from '../context/CartContext';
-import { Star, Clock, Ticket, Info, Play, Sparkles, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
+import {
+  Star,
+  Clock,
+  Ticket,
+  Info,
+  Play,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+} from 'lucide-react';
 
 interface HeroSpotlightProps {
   movies: Movie[];
 }
 
 export default function HeroSpotlight({ movies }: HeroSpotlightProps) {
-  const {
-    openBookingModal,
-    openDetailsModal,
-    openTrailerModal,
-    watchlist,
-    toggleWatchlist,
-  } = useCart();
+  const { openBookingModal, openDetailsModal, openTrailerModal, watchlist, toggleWatchlist } =
+    useCart();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Pick top 5 featured movies
@@ -62,11 +67,7 @@ export default function HeroSpotlight({ movies }: HeroSpotlightProps) {
         {/* Left: Movie Poster with Glass Card Effect */}
         <div className="relative flex-shrink-0 group">
           <div className="w-52 sm:w-64 aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl shadow-violet-900/40 border border-slate-700/60 transition-transform duration-500 group-hover:scale-105">
-            <img
-              src={posterImage}
-              alt={currentMovie.name}
-              className="w-full h-full object-cover"
-            />
+            <img src={posterImage} alt={currentMovie.name} className="w-full h-full object-cover" />
           </div>
           <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 font-black text-xs flex items-center gap-1 shadow-lg backdrop-blur-md">
             <Star className="w-3.5 h-3.5 fill-slate-950" />
@@ -111,13 +112,19 @@ export default function HeroSpotlight({ movies }: HeroSpotlightProps) {
           {/* Meta specs */}
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-slate-400">
             {currentMovie.premiered && (
-              <span>Year: <strong className="text-slate-200">{currentMovie.premiered.slice(0, 4)}</strong></span>
+              <span>
+                Year:{' '}
+                <strong className="text-slate-200">{currentMovie.premiered.slice(0, 4)}</strong>
+              </span>
             )}
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4 text-slate-400" />
               <strong className="text-slate-200">{currentMovie.runtime || 120} mins</strong>
             </span>
-            <span>Language: <strong className="text-slate-200">{currentMovie.language || 'English'}</strong></span>
+            <span>
+              Language:{' '}
+              <strong className="text-slate-200">{currentMovie.language || 'English'}</strong>
+            </span>
             <span className="px-2 py-0.5 rounded bg-slate-800 text-amber-300 text-xs font-bold">
               {currentMovie.ageRating || 'PG-13'}
             </span>

@@ -10,13 +10,8 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ movie }: MovieCardProps) {
-  const {
-    openBookingModal,
-    openDetailsModal,
-    openTrailerModal,
-    watchlist,
-    toggleWatchlist,
-  } = useCart();
+  const { openBookingModal, openDetailsModal, openTrailerModal, watchlist, toggleWatchlist } =
+    useCart();
 
   const isFavorite = watchlist.some((m) => m.id === movie.id);
 

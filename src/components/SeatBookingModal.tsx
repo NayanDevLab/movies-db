@@ -135,7 +135,8 @@ export default function SeatBookingModal() {
             <div>
               <h2 className="text-lg font-black text-white">{movie.name}</h2>
               <p className="text-xs text-slate-400">
-                {movie.genres?.join(', ')} • {movie.runtime || 120} mins • {movie.ageRating || 'PG-13'}
+                {movie.genres?.join(', ')} • {movie.runtime || 120} mins •{' '}
+                {movie.ageRating || 'PG-13'}
               </p>
             </div>
           </div>
@@ -258,7 +259,10 @@ export default function SeatBookingModal() {
               {/* Seat Matrix */}
               <div className="space-y-2.5 w-full max-w-lg overflow-x-auto pb-2">
                 {ROWS.map((rowInfo) => (
-                  <div key={rowInfo.row} className="flex items-center justify-center gap-1.5 sm:gap-2">
+                  <div
+                    key={rowInfo.row}
+                    className="flex items-center justify-center gap-1.5 sm:gap-2"
+                  >
                     <span className="w-5 text-center text-xs font-bold text-slate-500">
                       {rowInfo.row}
                     </span>
@@ -274,23 +278,18 @@ export default function SeatBookingModal() {
                             key={seatId}
                             disabled={isBooked}
                             onClick={() =>
-                              toggleSeat(
-                                rowInfo.row,
-                                seatNum,
-                                rowInfo.tier,
-                                rowInfo.basePrice
-                              )
+                              toggleSeat(rowInfo.row, seatNum, rowInfo.tier, rowInfo.basePrice)
                             }
                             className={`w-7 sm:w-8 h-7 sm:h-8 rounded-lg text-[10px] sm:text-xs font-bold flex items-center justify-center transition-all ${
                               isBooked
                                 ? 'bg-slate-900/40 text-slate-700 cursor-not-allowed border border-slate-800/30'
                                 : isSelected
-                                ? 'bg-amber-400 text-slate-950 font-black shadow-lg shadow-amber-400/40 scale-110'
-                                : rowInfo.tier === 'vip'
-                                ? 'bg-violet-950/60 hover:bg-violet-900 border border-violet-800/50 text-violet-300'
-                                : rowInfo.tier === 'gold'
-                                ? 'bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200'
-                                : 'bg-slate-800/60 hover:bg-slate-700 border border-slate-800 text-slate-400'
+                                  ? 'bg-amber-400 text-slate-950 font-black shadow-lg shadow-amber-400/40 scale-110'
+                                  : rowInfo.tier === 'vip'
+                                    ? 'bg-violet-950/60 hover:bg-violet-900 border border-violet-800/50 text-violet-300'
+                                    : rowInfo.tier === 'gold'
+                                      ? 'bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200'
+                                      : 'bg-slate-800/60 hover:bg-slate-700 border border-slate-800 text-slate-400'
                             }`}
                             title={`${rowInfo.row}${seatNum} (${rowInfo.tier.toUpperCase()}) - $${
                               rowInfo.basePrice + selectedScreen.surcharge
@@ -308,13 +307,16 @@ export default function SeatBookingModal() {
               {/* Tier Price Label */}
               <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 mt-4 pt-3 border-t border-slate-900 w-full">
                 <span>
-                  Rows A-B: Standard <strong className="text-white">${12 + selectedScreen.surcharge}</strong>
+                  Rows A-B: Standard{' '}
+                  <strong className="text-white">${12 + selectedScreen.surcharge}</strong>
                 </span>
                 <span>
-                  Rows C-E: Gold Prime <strong className="text-amber-400">${16 + selectedScreen.surcharge}</strong>
+                  Rows C-E: Gold Prime{' '}
+                  <strong className="text-amber-400">${16 + selectedScreen.surcharge}</strong>
                 </span>
                 <span>
-                  Row F: VIP Recliner <strong className="text-violet-400">${22 + selectedScreen.surcharge}</strong>
+                  Row F: VIP Recliner{' '}
+                  <strong className="text-violet-400">${22 + selectedScreen.surcharge}</strong>
                 </span>
               </div>
             </div>

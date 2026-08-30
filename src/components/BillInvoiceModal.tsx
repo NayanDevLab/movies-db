@@ -58,8 +58,8 @@ export default function BillInvoiceModal() {
           paymentMethod === 'card'
             ? 'Credit/Debit Card'
             : paymentMethod === 'upi'
-            ? 'Digital UPI / Wallet'
-            : 'Pay at Counter',
+              ? 'Digital UPI / Wallet'
+              : 'Pay at Counter',
       });
       openTicketPass(invoice);
     }, 1200);
@@ -74,7 +74,9 @@ export default function BillInvoiceModal() {
             <Receipt className="w-5 h-5 text-amber-400" />
             <div>
               <h2 className="text-lg font-black text-white">Invoice & Ticket Checkout</h2>
-              <p className="text-xs text-slate-400">Review your bill breakdown and complete booking</p>
+              <p className="text-xs text-slate-400">
+                Review your bill breakdown and complete booking
+              </p>
             </div>
           </div>
           <button
@@ -260,7 +262,8 @@ export default function BillInvoiceModal() {
                         <span>${item.totalItemPrice.toFixed(2)}</span>
                       </div>
                       <div className="text-[11px] text-slate-400">
-                        {item.seats.length} Tickets ({item.seats.map((s) => s.row + s.number).join(', ')})
+                        {item.seats.length} Tickets (
+                        {item.seats.map((s) => s.row + s.number).join(', ')})
                       </div>
                       {item.snacks.length > 0 && (
                         <div className="text-[10px] text-slate-500">
