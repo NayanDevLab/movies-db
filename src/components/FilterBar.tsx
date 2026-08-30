@@ -4,20 +4,7 @@ import React from 'react';
 import { useFilters } from '../context/FilterContext';
 import ActorSearchDropdown from './ActorSearchDropdown';
 import { ActorProfile } from '../types/movie';
-import {
-  SlidersHorizontal,
-  Star,
-  User,
-  Sparkles,
-  RotateCcw,
-  ArrowUpDown,
-  Filter,
-  Film,
-  X,
-  Tv,
-  Globe,
-  Flame,
-} from 'lucide-react';
+import { User, Sparkles, RotateCcw, ArrowUpDown, Film, X, Tv, Globe, Flame } from 'lucide-react';
 
 interface FilterBarProps {
   availableGenres: string[];
@@ -96,7 +83,7 @@ export default function FilterBar({
               className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
                 isActive
                   ? 'bg-gradient-to-r from-violet-600 via-purple-600 to-amber-500 text-white shadow-lg shadow-violet-600/30 scale-105'
-                  : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800'
+                  : 'bg-white hover:bg-slate-100 dark:bg-slate-900/90 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800 shadow-sm'
               }`}
             >
               {ind.label}
@@ -107,21 +94,21 @@ export default function FilterBar({
 
       {/* 2. Popular Actresses & Actors 1-Click Quick Bar with Gender Filter */}
       {availableActors.length > 0 && (
-        <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-3">
+        <div className="p-3.5 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800/80 shadow-sm dark:shadow-none space-y-3">
           <div className="flex items-center justify-between gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300">
-              <User className="w-4 h-4 text-cyan-400" />
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-300">
+              <User className="w-4 h-4 text-violet-600 dark:text-cyan-400" />
               <span>Real Live Cast & Celebrities</span>
             </div>
 
             {/* Gender Filter for Actresses / Actors */}
-            <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-xl border border-slate-800">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-0.5 rounded-xl border border-slate-200 dark:border-slate-800">
               <button
                 onClick={() => setStarGender('all')}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
                   starGender === 'all'
                     ? 'bg-violet-600 text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 All Stars
@@ -131,7 +118,7 @@ export default function FilterBar({
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
                   starGender === 'Female'
                     ? 'bg-pink-600 text-white shadow'
-                    : 'text-pink-400 hover:text-pink-300'
+                    : 'text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300'
                 }`}
               >
                 💃 Actresses
@@ -141,7 +128,7 @@ export default function FilterBar({
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
                   starGender === 'Male'
                     ? 'bg-cyan-600 text-white shadow'
-                    : 'text-cyan-400 hover:text-cyan-300'
+                    : 'text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300'
                 }`}
               >
                 🕺 Actors
@@ -162,7 +149,7 @@ export default function FilterBar({
                       ? star.gender === 'Female'
                         ? 'bg-pink-600 border-pink-400 text-white shadow-md'
                         : 'bg-cyan-600 border-cyan-400 text-white shadow-md'
-                      : 'bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white'
+                      : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {star.image?.medium ? (
@@ -172,12 +159,14 @@ export default function FilterBar({
                       className="w-5 h-5 rounded-full object-cover"
                     />
                   ) : (
-                    <span className="w-5 h-5 rounded-full bg-slate-800 text-[10px] flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-800 text-[10px] flex items-center justify-center">
                       👤
                     </span>
                   )}
                   <span>{star.name}</span>
-                  {star.gender === 'Female' && <span className="text-[10px] text-pink-300">★</span>}
+                  {star.gender === 'Female' && (
+                    <span className="text-[10px] text-pink-500 dark:text-pink-300">★</span>
+                  )}
                 </button>
               );
             })}
@@ -195,8 +184,8 @@ export default function FilterBar({
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
                 isActive
-                  ? 'bg-violet-600/30 text-violet-300 border border-violet-500/40'
-                  : 'bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-slate-300 border border-slate-800/80'
+                  ? 'bg-violet-600/15 dark:bg-violet-600/30 text-violet-700 dark:text-violet-300 border border-violet-500/40 font-bold'
+                  : 'bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300 border border-slate-200 dark:border-slate-800/80 shadow-sm'
               }`}
             >
               {cat.label}
@@ -206,7 +195,7 @@ export default function FilterBar({
       </div>
 
       {/* 4. Dropdowns & Controls Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/80 shadow-xl backdrop-blur-md flex flex-wrap items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/80 shadow-lg dark:shadow-xl backdrop-blur-md flex flex-wrap items-center justify-between gap-4">
         {/* Left Side: Filter Dropdowns & Actor Live Search */}
         <div className="flex flex-wrap items-center gap-3 flex-1">
           {/* Genre Dropdown */}
@@ -214,7 +203,7 @@ export default function FilterBar({
             <select
               value={filters.selectedGenre}
               onChange={(e) => setSelectedGenre(e.target.value)}
-              className="appearance-none bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
+              className="appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
             >
               <option value="all">🎬 All Genres</option>
               {availableGenres.map((g) => (
@@ -233,7 +222,7 @@ export default function FilterBar({
             <select
               value={filters.selectedLanguage}
               onChange={(e) => setSelectedLanguage(e.target.value)}
-              className="appearance-none bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
+              className="appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
             >
               <option value="all">🌐 All Languages</option>
               {availableLanguages.map((lang) => (
@@ -252,7 +241,7 @@ export default function FilterBar({
             <select
               value={filters.minRating}
               onChange={(e) => setMinRating(Number(e.target.value))}
-              className="appearance-none bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
+              className="appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
             >
               <option value={0}>⭐ Any Rating</option>
               <option value={7}>⭐ 7.0+ Rated</option>
@@ -276,7 +265,7 @@ export default function FilterBar({
             <select
               value={filters.sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="appearance-none bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
+              className="appearance-none bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-medium rounded-xl px-3.5 py-2.5 pr-8 focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
             >
               <option value="featured">✨ Featured Order</option>
               <option value="rating-desc">⭐ Highest Rating</option>
@@ -293,7 +282,7 @@ export default function FilterBar({
           {isFiltered && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 text-xs font-semibold transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Reset</span>
@@ -346,16 +335,17 @@ export default function FilterBar({
       {/* Active Filter Badges */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-slate-400 font-medium">
-            Showing <strong className="text-white">{totalResults}</strong> real live titles
+          <span className="text-slate-600 dark:text-slate-400 font-medium">
+            Showing <strong className="text-slate-900 dark:text-white">{totalResults}</strong> real
+            live titles
           </span>
 
           {filters.selectedIndustry !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-violet-900/40 text-violet-300 border border-violet-700/50 capitalize">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-700/50 capitalize">
               Industry: {filters.selectedIndustry}
               <button
                 onClick={() => setSelectedIndustry('all')}
-                className="hover:text-white font-bold ml-1"
+                className="hover:text-violet-900 dark:hover:text-white font-bold ml-1"
               >
                 ✕
               </button>
@@ -363,11 +353,11 @@ export default function FilterBar({
           )}
 
           {filters.selectedLanguage !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-900/40 text-emerald-300 border border-emerald-700/50">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700/50">
               Language: {filters.selectedLanguage}
               <button
                 onClick={() => setSelectedLanguage('all')}
-                className="hover:text-white font-bold ml-1"
+                className="hover:text-emerald-900 dark:hover:text-white font-bold ml-1"
               >
                 ✕
               </button>
@@ -375,11 +365,11 @@ export default function FilterBar({
           )}
 
           {filters.selectedGenre !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-violet-900/40 text-violet-300 border border-violet-700/50">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-700/50">
               Genre: {filters.selectedGenre}
               <button
                 onClick={() => setSelectedGenre('all')}
-                className="hover:text-white font-bold ml-1"
+                className="hover:text-violet-900 dark:hover:text-white font-bold ml-1"
               >
                 ✕
               </button>
@@ -387,20 +377,23 @@ export default function FilterBar({
           )}
 
           {filters.minRating > 0 && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-900/40 text-amber-300 border border-amber-700/50">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-700/50">
               Rating: {filters.minRating}+ ★
-              <button onClick={() => setMinRating(0)} className="hover:text-white font-bold ml-1">
+              <button
+                onClick={() => setMinRating(0)}
+                className="hover:text-amber-900 dark:hover:text-white font-bold ml-1"
+              >
                 ✕
               </button>
             </span>
           )}
 
           {filters.selectedActor !== 'all' && !selectedActorProfile && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-cyan-900/40 text-cyan-300 border border-cyan-700/50">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-700/50">
               Actor: {filters.selectedActor}
               <button
                 onClick={() => setSelectedActor('all')}
-                className="hover:text-white font-bold ml-1"
+                className="hover:text-cyan-900 dark:hover:text-white font-bold ml-1"
               >
                 ✕
               </button>
@@ -408,7 +401,7 @@ export default function FilterBar({
           )}
 
           {filters.searchQuery && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-800 text-slate-200 border border-slate-700">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
               Search: &quot;{filters.searchQuery}&quot;
             </span>
           )}

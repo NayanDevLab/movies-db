@@ -10,9 +10,7 @@ import {
   Calendar,
   Clock,
   MapPin,
-  Ticket,
   QrCode,
-  Sparkles,
   Popcorn,
   Film,
 } from 'lucide-react';
