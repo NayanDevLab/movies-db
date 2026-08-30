@@ -3,6 +3,7 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { X, Heart, Ticket, Trash2, Star } from 'lucide-react';
+import { FALLBACK_POSTER_IMAGE, WATCHLIST_STYLES } from '../constants/ui';
 
 export default function WatchlistModal() {
   const {
@@ -57,15 +58,10 @@ export default function WatchlistModal() {
           ) : (
             watchlist.map((movie) => {
               const posterImage =
-                movie.image?.medium ||
-                movie.image?.original ||
-                'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200&auto=format&fit=crop&q=80';
+                movie.image?.medium || movie.image?.original || FALLBACK_POSTER_IMAGE;
 
               return (
-                <div
-                  key={movie.id}
-                  className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-pink-500/40 transition-all flex flex-col sm:flex-row items-center justify-between gap-4"
-                >
+                <div key={movie.id} className={WATCHLIST_STYLES.card}>
                   <div
                     onClick={() => {
                       closeWatchlist();
@@ -73,7 +69,7 @@ export default function WatchlistModal() {
                     }}
                     className="flex items-center gap-3 cursor-pointer w-full sm:w-auto"
                   >
-                    <div className="w-12 h-16 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 flex-shrink-0 border border-slate-300 dark:border-slate-700">
+                    <div className={WATCHLIST_STYLES.posterContainer}>
                       <img
                         src={posterImage}
                         alt={movie.name}
@@ -100,7 +96,7 @@ export default function WatchlistModal() {
                   <div className="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-200 dark:border-slate-800">
                     <button
                       onClick={() => toggleWatchlist(movie)}
-                      className="p-2 rounded-xl bg-slate-100 hover:bg-red-500/20 dark:bg-slate-800 dark:hover:bg-red-500/20 text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 border border-slate-200 dark:border-slate-700 transition-colors text-xs"
+                      className={WATCHLIST_STYLES.removeButton}
                       title="Remove from Watchlist"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -111,7 +107,7 @@ export default function WatchlistModal() {
                         closeWatchlist();
                         openBookingModal(movie);
                       }}
-                      className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-violet-600/30 transition-all"
+                      className={WATCHLIST_STYLES.bookButton}
                     >
                       <Ticket className="w-3.5 h-3.5" /> Book Ticket
                     </button>

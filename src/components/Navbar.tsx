@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useTheme } from '../context/ThemeContext';
 import { CINEMA_CITIES, searchActors } from '../services/movieApi';
 import { ActorProfile } from '../types/movie';
+import { NAVBAR_STYLES } from '../constants/ui';
 import {
   Search,
   Ticket,
@@ -78,8 +79,8 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/85 dark:bg-[#0b0f19]/85 border-b border-slate-200 dark:border-violet-900/30 transition-colors duration-200 shadow-sm dark:shadow-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <header className={NAVBAR_STYLES.header}>
+        <div className={NAVBAR_STYLES.container}>
           {/* Logo & Brand */}
           <div
             onClick={resetFilters}
