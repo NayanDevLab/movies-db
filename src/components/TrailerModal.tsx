@@ -3,7 +3,7 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { getMovieTrailer } from '../services/movieApi';
-import { X, Ticket, Play, Sparkles, Film, Star } from 'lucide-react';
+import { X, Ticket, Play, Star } from 'lucide-react';
 
 export default function TrailerModal() {
   const { selectedTrailerMovie, closeTrailerModal, openBookingModal } = useCart();

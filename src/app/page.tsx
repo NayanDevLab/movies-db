@@ -16,16 +16,7 @@ import {
   fetchMoviesByActorId,
 } from '../services/movieApi';
 import { useFilters } from '../context/FilterContext';
-import {
-  Film,
-  Sparkles,
-  Clapperboard,
-  SearchX,
-  RefreshCw,
-  Heart,
-  ShieldCheck,
-  Zap,
-} from 'lucide-react';
+import { Clapperboard, SearchX, RefreshCw, ShieldCheck, Zap } from 'lucide-react';
 
 export default function HomePage() {
   const { filters, selectedActorProfile, resetFilters } = useFilters();
@@ -179,11 +170,9 @@ export default function HomePage() {
     // 6. Actor Filter
     if (filters.selectedActor !== 'all') {
       result = result.filter((m) => {
-        // Match in embedded cast
         const hasCast = m._embedded?.cast?.some((c) =>
           c.person?.name.toLowerCase().includes(filters.selectedActor.toLowerCase())
         );
-        // Or match in summary/keywords
         const hasSummary = m.summary?.toLowerCase().includes(filters.selectedActor.toLowerCase());
         return hasCast || hasSummary;
       });
@@ -214,7 +203,7 @@ export default function HomePage() {
   }, [filteredMovies, filters.page, filters.itemsPerPage]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100 selection:bg-violet-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] selection:bg-violet-600 selection:text-white transition-colors duration-200">
       {/* Navigation Bar */}
       <Navbar />
 
@@ -239,11 +228,11 @@ export default function HomePage() {
             {Array.from({ length: 12 }).map((_, i) => (
               <div
                 key={i}
-                className="rounded-2xl bg-slate-900/60 border border-slate-800 p-3 space-y-3 animate-pulse"
+                className="rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-3 space-y-3 animate-pulse shadow-sm"
               >
-                <div className="w-full aspect-[2/3] bg-slate-800 rounded-xl" />
-                <div className="h-4 bg-slate-800 rounded w-3/4" />
-                <div className="h-3 bg-slate-800 rounded w-1/2" />
+                <div className="w-full aspect-[2/3] bg-slate-200 dark:bg-slate-800 rounded-xl" />
+                <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
+                <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2" />
               </div>
             ))}
           </div>
@@ -251,11 +240,11 @@ export default function HomePage() {
 
         {/* Error Notification */}
         {error && (
-          <div className="my-12 p-6 rounded-2xl bg-red-950/40 border border-red-800/60 text-center max-w-md mx-auto space-y-3">
-            <p className="text-sm text-red-300 font-semibold">{error}</p>
+          <div className="my-12 p-6 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-center max-w-md mx-auto space-y-3 shadow-sm">
+            <p className="text-sm text-red-600 dark:text-red-300 font-semibold">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs inline-flex items-center gap-2"
+              className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow"
             >
               <RefreshCw className="w-3.5 h-3.5" /> Reload Application
             </button>
@@ -267,12 +256,14 @@ export default function HomePage() {
           <>
             {paginatedMovies.length === 0 ? (
               <div className="py-20 text-center space-y-4 max-w-md mx-auto">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500">
                   <SearchX className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">No matching movies found</h3>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                    No matching movies found
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     Try adjusting your search query, genre, rating threshold, or selected actor.
                   </p>
                 </div>
@@ -298,36 +289,36 @@ export default function HomePage() {
       </main>
 
       {/* Cinematic Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-950/80 mt-16 text-slate-400 text-xs">
+      <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-slate-100/90 dark:bg-slate-950/80 mt-16 text-slate-600 dark:text-slate-400 text-xs transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="space-y-3 md:col-span-2">
               <div className="flex items-center gap-2">
-                <Clapperboard className="w-5 h-5 text-violet-400" />
-                <span className="text-lg font-black text-white tracking-wider">
-                  CINE<span className="text-amber-400">PULSE</span>
+                <Clapperboard className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+                <span className="text-lg font-black text-slate-900 dark:text-white tracking-wider">
+                  CINE<span className="text-amber-500 dark:text-amber-400">PULSE</span>
                 </span>
               </div>
-              <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
+              <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed max-w-sm">
                 Next-generation movie exploration & ticketing experience. Browse thousands of movies
                 with verified cast members, real-time filters, interactive cinema seating, and
                 instant billing.
               </p>
               <div className="flex items-center gap-3 pt-1">
-                <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400 bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-800/40 font-medium">
+                <span className="inline-flex items-center gap-1 text-[11px] text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/40 font-medium">
                   <ShieldCheck className="w-3.5 h-3.5" /> 100% Free Public API
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] text-violet-400 bg-violet-950/40 px-2.5 py-1 rounded-full border border-violet-800/40 font-medium">
+                <span className="inline-flex items-center gap-1 text-[11px] text-violet-700 dark:text-violet-400 bg-violet-100 dark:bg-violet-950/40 px-2.5 py-1 rounded-full border border-violet-200 dark:border-violet-800/40 font-medium">
                   <Zap className="w-3.5 h-3.5" /> Real-time Interactive Booking
                 </span>
               </div>
             </div>
 
             <div>
-              <h4 className="font-bold text-white mb-3 text-xs uppercase tracking-wider">
+              <h4 className="font-bold text-slate-900 dark:text-white mb-3 text-xs uppercase tracking-wider">
                 Cinema Highlights
               </h4>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li>• Live TVMaze API + Cast Details</li>
                 <li>• Genre, Actor & Rating Filters</li>
                 <li>• Interactive Hall Seat Selection</li>
@@ -337,27 +328,27 @@ export default function HomePage() {
             </div>
 
             <div>
-              <h4 className="font-bold text-white mb-3 text-xs uppercase tracking-wider">
+              <h4 className="font-bold text-slate-900 dark:text-white mb-3 text-xs uppercase tracking-wider">
                 Active Promo Codes
               </h4>
               <div className="space-y-2 font-mono text-[11px]">
-                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 flex justify-between">
-                  <span className="text-amber-400 font-bold">CINEMA20</span>
-                  <span className="text-slate-400">20% Off</span>
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex justify-between shadow-sm">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">CINEMA20</span>
+                  <span className="text-slate-500 dark:text-slate-400">20% Off</span>
                 </div>
-                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 flex justify-between">
-                  <span className="text-amber-400 font-bold">SUPERSTAR</span>
-                  <span className="text-slate-400">$10 Off</span>
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex justify-between shadow-sm">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">SUPERSTAR</span>
+                  <span className="text-slate-500 dark:text-slate-400">$10 Off</span>
                 </div>
-                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 flex justify-between">
-                  <span className="text-amber-400 font-bold">FIRSTSHOW</span>
-                  <span className="text-slate-400">15% Off</span>
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex justify-between shadow-sm">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold">FIRSTSHOW</span>
+                  <span className="text-slate-500 dark:text-slate-400">15% Off</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+          <div className="pt-8 border-t border-slate-200 dark:border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
             <p>© {new Date().getFullYear()} CinePulse Entertainment Inc. All rights reserved.</p>
             <p className="flex items-center gap-1">
               Crafted with Next.js, TypeScript & Tailwind CSS

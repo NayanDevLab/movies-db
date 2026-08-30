@@ -43,13 +43,13 @@ export default function Pagination({ totalItems }: PaginationProps) {
   };
 
   return (
-    <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800/80 text-xs">
+    <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-slate-800/80 text-xs">
       {/* Items per page selector & result count */}
-      <div className="flex items-center gap-3 text-slate-400">
+      <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400">
         <span>
-          Showing <strong className="text-white">{startIndex}</strong> -{' '}
-          <strong className="text-white">{endIndex}</strong> of{' '}
-          <strong className="text-white">{totalItems}</strong> movies
+          Showing <strong className="text-slate-900 dark:text-white">{startIndex}</strong> -{' '}
+          <strong className="text-slate-900 dark:text-white">{endIndex}</strong> of{' '}
+          <strong className="text-slate-900 dark:text-white">{totalItems}</strong> movies
         </span>
 
         <div className="flex items-center gap-1.5 ml-2">
@@ -57,7 +57,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
           <select
             value={itemsPerPage}
             onChange={(e) => setItemsPerPage(Number(e.target.value))}
-            className="bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-slate-200 text-xs focus:outline-none focus:border-violet-500 cursor-pointer"
+            className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1 text-slate-800 dark:text-slate-200 text-xs focus:outline-none focus:border-violet-500 cursor-pointer"
           >
             <option value={12}>12</option>
             <option value={24}>24</option>
@@ -72,7 +72,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
         <button
           disabled={page === 1}
           onClick={() => setPage(1)}
-          className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           title="First Page"
         >
           <ChevronsLeft className="w-4 h-4" />
@@ -82,7 +82,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
         <button
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
-          className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           title="Previous Page"
         >
           <ChevronLeft className="w-4 h-4" />
@@ -93,7 +93,10 @@ export default function Pagination({ totalItems }: PaginationProps) {
           {getPageNumbers().map((p, idx) => {
             if (p < 0) {
               return (
-                <span key={`ellipsis-${idx}`} className="px-2 text-slate-600 font-bold">
+                <span
+                  key={`ellipsis-${idx}`}
+                  className="px-2 text-slate-400 dark:text-slate-600 font-bold"
+                >
                   ...
                 </span>
               );
@@ -107,7 +110,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
                 className={`w-8 h-8 rounded-xl font-bold transition-all text-xs ${
                   isActive
                     ? 'bg-gradient-to-tr from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-600/30'
-                    : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    : 'bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800'
                 }`}
               >
                 {p}
@@ -120,7 +123,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
         <button
           disabled={page === totalPages}
           onClick={() => setPage(page + 1)}
-          className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           title="Next Page"
         >
           <ChevronRight className="w-4 h-4" />
@@ -130,7 +133,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
         <button
           disabled={page === totalPages}
           onClick={() => setPage(totalPages)}
-          className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           title="Last Page"
         >
           <ChevronsRight className="w-4 h-4" />
