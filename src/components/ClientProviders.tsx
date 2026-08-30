@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ReactNode } from 'react';
+import { ThemeProvider } from '../context/ThemeContext';
 import { FilterProvider } from '../context/FilterContext';
 import { CartProvider } from '../context/CartContext';
 import MovieDetailsModal from './MovieDetailsModal';
@@ -13,18 +14,20 @@ import WatchlistModal from './WatchlistModal';
 
 export default function ClientProviders({ children }: { children: ReactNode }) {
   return (
-    <FilterProvider>
-      <CartProvider>
-        {children}
-        {/* Global Portals / Modals */}
-        <MovieDetailsModal />
-        <SeatBookingModal />
-        <CartDrawer />
-        <BillInvoiceModal />
-        <TicketPassModal />
-        <TrailerModal />
-        <WatchlistModal />
-      </CartProvider>
-    </FilterProvider>
+    <ThemeProvider>
+      <FilterProvider>
+        <CartProvider>
+          {children}
+          {/* Global Portals / Modals */}
+          <MovieDetailsModal />
+          <SeatBookingModal />
+          <CartDrawer />
+          <BillInvoiceModal />
+          <TicketPassModal />
+          <TrailerModal />
+          <WatchlistModal />
+        </CartProvider>
+      </FilterProvider>
+    </ThemeProvider>
   );
 }

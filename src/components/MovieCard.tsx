@@ -3,7 +3,7 @@
 import React from 'react';
 import { Movie } from '../types/movie';
 import { useCart } from '../context/CartContext';
-import { Star, Clock, Ticket, Info, Film, Play, Heart } from 'lucide-react';
+import { Star, Clock, Ticket, Info, Play, Heart } from 'lucide-react';
 
 interface MovieCardProps {
   movie: Movie;
@@ -22,10 +22,9 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   const ratingVal = movie.rating?.average ? movie.rating.average.toFixed(1) : '8.2';
   const premierYear = movie.premiered ? movie.premiered.slice(0, 4) : '2024';
-  const price = movie.ticketPrice || 14;
 
   return (
-    <div className="group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 hover:border-violet-500/50 overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-violet-950/40 transition-all duration-300 transform hover:-translate-y-1">
+    <div className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800/80 hover:border-violet-500/50 overflow-hidden shadow-md hover:shadow-2xl hover:shadow-violet-950/20 dark:hover:shadow-violet-950/40 transition-all duration-300 transform hover:-translate-y-1">
       {/* Poster Image Container */}
       <div
         onClick={() => openDetailsModal(movie)}
@@ -100,13 +99,13 @@ export default function MovieCard({ movie }: MovieCardProps) {
             {movie.genres?.slice(0, 2).map((genre) => (
               <span
                 key={genre}
-                className="px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 text-[11px] font-medium border border-slate-700/50"
+                className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 text-[11px] font-medium border border-slate-200 dark:border-slate-700/50"
               >
                 {genre}
               </span>
             ))}
             {movie.genres?.length > 2 && (
-              <span className="text-[10px] text-slate-500 self-center">
+              <span className="text-[10px] text-slate-400 dark:text-slate-500 self-center">
                 +{movie.genres.length - 2}
               </span>
             )}
@@ -115,30 +114,32 @@ export default function MovieCard({ movie }: MovieCardProps) {
           {/* Title */}
           <h3
             onClick={() => openDetailsModal(movie)}
-            className="text-base font-bold text-white group-hover:text-violet-400 transition-colors line-clamp-1 cursor-pointer"
+            className="text-base font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors line-clamp-1 cursor-pointer"
             title={movie.name}
           >
             {movie.name}
           </h3>
 
           {/* Runtime & Year */}
-          <div className="flex items-center gap-3 text-xs text-slate-400 mt-1">
+          <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
             <span>{premierYear}</span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3 text-slate-500" />
+              <Clock className="w-3 h-3 text-slate-400 dark:text-slate-500" />
               {movie.runtime || 110}m
             </span>
             <span>•</span>
-            <span className="text-slate-300">{movie.language || 'English'}</span>
+            <span className="text-slate-700 dark:text-slate-300">
+              {movie.language || 'English'}
+            </span>
           </div>
         </div>
 
         {/* Card Actions */}
-        <div className="pt-2 border-t border-slate-800/80 flex items-center gap-2">
+        <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80 flex items-center gap-2">
           <button
             onClick={() => openTrailerModal(movie)}
-            className="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-amber-400 border border-slate-700 text-xs transition-colors"
+            className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-400 border border-slate-200 dark:border-slate-700 text-xs transition-colors"
             title="Watch Trailer"
           >
             <Play className="w-3.5 h-3.5 fill-current" />

@@ -10,9 +10,6 @@ import {
   Clock,
   MapPin,
   Popcorn,
-  Plus,
-  Minus,
-  Sparkles,
   ArrowRight,
   ShoppingBag,
   Tag,
@@ -59,19 +56,21 @@ export default function CartDrawer() {
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col">
+        <div className="w-screen max-w-md bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col">
           {/* Drawer Header */}
-          <div className="p-5 border-b border-slate-800 bg-slate-950 flex items-center justify-between">
+          <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <ShoppingBag className="w-5 h-5 text-violet-400" />
-              <h2 className="text-base font-bold text-white">Booking Cart & Summary</h2>
-              <span className="px-2 py-0.5 rounded-full bg-violet-950 text-violet-300 text-xs font-bold border border-violet-800">
+              <ShoppingBag className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                Booking Cart & Summary
+              </h2>
+              <span className="px-2 py-0.5 rounded-full bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300 text-xs font-bold border border-violet-200 dark:border-violet-800">
                 {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
               </span>
             </div>
             <button
               onClick={closeCart}
-              className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -80,9 +79,11 @@ export default function CartDrawer() {
           {/* Cart Items List */}
           <div className="flex-1 overflow-y-auto p-5 space-y-4">
             {cartItems.length === 0 ? (
-              <div className="py-16 text-center text-slate-400 space-y-3">
-                <Ticket className="w-12 h-12 mx-auto text-slate-600 opacity-60" />
-                <p className="text-sm font-medium">Your booking cart is currently empty.</p>
+              <div className="py-16 text-center text-slate-500 dark:text-slate-400 space-y-3">
+                <Ticket className="w-12 h-12 mx-auto text-slate-400 dark:text-slate-600 opacity-60" />
+                <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
+                  Your booking cart is currently empty.
+                </p>
                 <p className="text-xs text-slate-500">
                   Select your favorite movie and reserve your cinema seats!
                 </p>
@@ -91,12 +92,12 @@ export default function CartDrawer() {
               cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 shadow-md"
+                  className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm"
                 >
                   {/* Movie Info & Delete */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-16 rounded-lg overflow-hidden bg-slate-800 flex-shrink-0 border border-slate-700">
+                      <div className="w-12 h-16 rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 flex-shrink-0 border border-slate-300 dark:border-slate-700">
                         <img
                           src={
                             item.movie.image?.medium ||
@@ -107,18 +108,21 @@ export default function CartDrawer() {
                         />
                       </div>
                       <div>
-                        <h3 className="text-sm font-bold text-white line-clamp-1">
+                        <h3 className="text-sm font-bold text-slate-900 dark:text-white line-clamp-1">
                           {item.movie.name}
                         </h3>
-                        <div className="flex flex-col text-[11px] text-slate-400 space-y-0.5 mt-1">
+                        <div className="flex flex-col text-[11px] text-slate-500 dark:text-slate-400 space-y-0.5 mt-1">
                           <span className="flex items-center gap-1">
-                            <Calendar className="w-3 h-3 text-violet-400" /> {item.showDate}
+                            <Calendar className="w-3 h-3 text-violet-600 dark:text-violet-400" />{' '}
+                            {item.showDate}
                           </span>
                           <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3 text-amber-400" /> {item.showTime}
+                            <Clock className="w-3 h-3 text-amber-500 dark:text-amber-400" />{' '}
+                            {item.showTime}
                           </span>
                           <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3 text-cyan-400" /> {item.cinemaHall}
+                            <MapPin className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />{' '}
+                            {item.cinemaHall}
                           </span>
                         </div>
                       </div>
@@ -126,7 +130,7 @@ export default function CartDrawer() {
 
                     <button
                       onClick={() => removeCartItem(item.id)}
-                      className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors"
                       title="Remove from Cart"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -134,44 +138,47 @@ export default function CartDrawer() {
                   </div>
 
                   {/* Reserved Seats List */}
-                  <div className="pt-2 border-t border-slate-900 flex items-center justify-between text-xs">
-                    <span className="text-slate-400">
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-900 flex items-center justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">
                       Seats:{' '}
-                      <strong className="text-amber-400">
+                      <strong className="text-amber-600 dark:text-amber-400">
                         {item.seats.map((s) => `${s.row}${s.number}`).join(', ')}
                       </strong>
                     </span>
-                    <span className="font-bold text-white">${item.seatSubtotal.toFixed(2)}</span>
+                    <span className="font-bold text-slate-900 dark:text-white">
+                      ${item.seatSubtotal.toFixed(2)}
+                    </span>
                   </div>
 
                   {/* Snacks List in Item */}
                   {item.snacks.length > 0 && (
-                    <div className="space-y-1.5 pt-2 border-t border-slate-900">
-                      <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1">
-                        <Popcorn className="w-3 h-3 text-amber-400" /> Snacks & Combos:
+                    <div className="space-y-1.5 pt-2 border-t border-slate-200 dark:border-slate-900">
+                      <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                        <Popcorn className="w-3 h-3 text-amber-500 dark:text-amber-400" /> Snacks &
+                        Combos:
                       </span>
                       {item.snacks.map(({ snack, quantity }) => (
                         <div
                           key={snack.id}
-                          className="flex items-center justify-between text-xs bg-slate-900/60 p-1.5 rounded-lg"
+                          className="flex items-center justify-between text-xs bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-lg"
                         >
-                          <span className="text-slate-300">
+                          <span className="text-slate-800 dark:text-slate-300">
                             {snack.name} (x{quantity})
                           </span>
                           <div className="flex items-center gap-2">
-                            <span className="text-slate-400 font-medium">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium">
                               ${(snack.price * quantity).toFixed(2)}
                             </span>
                             <div className="flex items-center gap-1">
                               <button
                                 onClick={() => updateSnackQuantity(item.id, snack.id, -1)}
-                                className="w-5 h-5 rounded bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center justify-center text-[10px]"
+                                className="w-5 h-5 rounded bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 flex items-center justify-center text-[10px]"
                               >
                                 -
                               </button>
                               <button
                                 onClick={() => updateSnackQuantity(item.id, snack.id, 1)}
-                                className="w-5 h-5 rounded bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center justify-center text-[10px]"
+                                className="w-5 h-5 rounded bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 flex items-center justify-center text-[10px]"
                               >
                                 +
                               </button>
@@ -183,9 +190,9 @@ export default function CartDrawer() {
                   )}
 
                   {/* Item Subtotal */}
-                  <div className="pt-2 flex justify-between items-center text-xs font-bold text-slate-300">
+                  <div className="pt-2 flex justify-between items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                     <span>Item Total</span>
-                    <span className="text-emerald-400 text-sm">
+                    <span className="text-emerald-600 dark:text-emerald-400 text-sm">
                       ${item.totalItemPrice.toFixed(2)}
                     </span>
                   </div>
@@ -196,7 +203,7 @@ export default function CartDrawer() {
 
           {/* Drawer Footer & Bill Calculator */}
           {cartItems.length > 0 && (
-            <div className="p-5 border-t border-slate-800 bg-slate-950 space-y-4">
+            <div className="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-4">
               {/* Promo Code Form */}
               <form onSubmit={handleApplyCoupon} className="space-y-1.5">
                 <div className="flex items-center gap-2">
@@ -207,7 +214,7 @@ export default function CartDrawer() {
                       placeholder="Promo Code (e.g. CINEMA20)"
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white uppercase placeholder-slate-500 focus:outline-none focus:border-violet-500"
+                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white uppercase placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-violet-500"
                     />
                   </div>
                   <button
@@ -219,46 +226,56 @@ export default function CartDrawer() {
                 </div>
 
                 {activeCoupon && (
-                  <div className="flex items-center justify-between text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 px-2.5 py-1 rounded-lg">
+                  <div className="flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 px-2.5 py-1 rounded-lg">
                     <span>Active: {activeCoupon}</span>
                     <button
                       type="button"
                       onClick={removeCoupon}
-                      className="text-slate-400 hover:text-white text-[11px]"
+                      className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white text-[11px]"
                     >
                       Remove
                     </button>
                   </div>
                 )}
                 {couponStatus && !activeCoupon && (
-                  <p className="text-[11px] text-red-400">{couponStatus.message}</p>
+                  <p className="text-[11px] text-red-600 dark:text-red-400">
+                    {couponStatus.message}
+                  </p>
                 )}
               </form>
 
               {/* Price Breakdown */}
-              <div className="space-y-1.5 text-xs text-slate-400 pt-2 border-t border-slate-900">
+              <div className="space-y-1.5 text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-slate-900">
                 <div className="flex justify-between">
                   <span>Tickets & Snacks Subtotal</span>
-                  <span className="text-slate-200 font-semibold">${subtotal.toFixed(2)}</span>
+                  <span className="text-slate-800 dark:text-slate-200 font-semibold">
+                    ${subtotal.toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Convenience & Booking Fee</span>
-                  <span className="text-slate-200">${convenienceFee.toFixed(2)}</span>
+                  <span className="text-slate-800 dark:text-slate-200">
+                    ${convenienceFee.toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Integrated Taxes (10% GST/VAT)</span>
-                  <span className="text-slate-200">${taxAmount.toFixed(2)}</span>
+                  <span className="text-slate-800 dark:text-slate-200">
+                    ${taxAmount.toFixed(2)}
+                  </span>
                 </div>
                 {discountAmount > 0 && (
-                  <div className="flex justify-between text-emerald-400 font-semibold">
+                  <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-semibold">
                     <span>Discount Applied</span>
                     <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
 
-                <div className="flex justify-between items-center pt-2 border-t border-slate-800 text-sm font-black text-white">
+                <div className="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-800 text-sm font-black text-slate-900 dark:text-white">
                   <span>Grand Total</span>
-                  <span className="text-lg text-emerald-400">${grandTotal.toFixed(2)}</span>
+                  <span className="text-lg text-emerald-600 dark:text-emerald-400">
+                    ${grandTotal.toFixed(2)}
+                  </span>
                 </div>
               </div>
 
