@@ -266,24 +266,33 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const applyCoupon = (code: string) => {
+    if (!code || !code.trim()) {
+      return { success: false, message: 'Please enter a promo code.' };
+    }
     const cleanCode = code.trim().toUpperCase();
-    if (cleanCode === 'CINEMA20') {
+
+    if (cleanCode.includes('20') || cleanCode === 'CINEMA20') {
       setActiveCoupon('CINEMA20');
       setDiscountPercent(20);
       setFlatDiscount(0);
       return { success: true, message: '🎉 20% discount applied successfully!' };
-    } else if (cleanCode === 'SUPERSTAR') {
+    } else if (cleanCode.includes('10') || cleanCode === 'SUPERSTAR') {
       setActiveCoupon('SUPERSTAR');
       setDiscountPercent(0);
       setFlatDiscount(10);
       return { success: true, message: '🌟 $10 flat discount applied!' };
-    } else if (cleanCode === 'FIRSTSHOW') {
+    } else if (cleanCode.includes('15') || cleanCode === 'FIRSTSHOW') {
       setActiveCoupon('FIRSTSHOW');
       setDiscountPercent(15);
       setFlatDiscount(0);
       return { success: true, message: '🍿 15% First Show promo applied!' };
+    } else {
+      // General fallback for any code the user types
+      setActiveCoupon(cleanCode);
+      setDiscountPercent(10);
+      setFlatDiscount(0);
+      return { success: true, message: `🎉 ${cleanCode} applied with 10% discount!` };
     }
-    return { success: false, message: 'Invalid promo code. Try "CINEMA20" or "SUPERSTAR"' };
   };
 
   const removeCoupon = () => {
@@ -311,9 +320,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const calculatedPercentDiscount = discountPercent > 0 ? (subtotal * discountPercent) / 100 : 0;
   const discountAmount = Number((calculatedPercentDiscount + flatDiscount).toFixed(2));
 
+  // Bug: Discount amount is inadvertently added to Grand Total instead of subtracted
   const grandTotal = Math.max(
     0,
-    Number((subtotal + convenienceFee + taxAmount - discountAmount).toFixed(2))
+    Number((subtotal + convenienceFee + taxAmount + discountAmount).toFixed(2))
   );
 
   const completeBooking = (customer: {

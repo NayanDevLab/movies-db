@@ -205,7 +205,36 @@ export default function CartDrawer() {
           {cartItems.length > 0 && (
             <div className="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-4">
               {/* Promo Code Form */}
-              <form onSubmit={handleApplyCoupon} className="space-y-1.5">
+              <form onSubmit={handleApplyCoupon} className="space-y-2">
+                {/* 1-Click Suggested Promo Code Chips */}
+                {!activeCoupon && (
+                  <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                    <span className="text-slate-500 text-[10px]">Suggested:</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCouponInput('CINEMA20');
+                        const res = applyCoupon('CINEMA20');
+                        setCouponStatus(res);
+                      }}
+                      className="px-2 py-0.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold border border-amber-500/30 transition-colors"
+                    >
+                      CINEMA20 (20% OFF)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCouponInput('SUPERSTAR');
+                        const res = applyCoupon('SUPERSTAR');
+                        setCouponStatus(res);
+                      }}
+                      className="px-2 py-0.5 rounded-lg bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 font-mono font-bold border border-violet-500/30 transition-colors"
+                    >
+                      SUPERSTAR ($10 OFF)
+                    </button>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-2">
                   <div className="relative flex-1">
                     <Tag className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />

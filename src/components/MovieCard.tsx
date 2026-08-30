@@ -25,25 +25,24 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <div className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800/80 hover:border-violet-500/50 overflow-hidden shadow-md hover:shadow-2xl hover:shadow-violet-950/20 dark:hover:shadow-violet-950/40 transition-all duration-300 transform hover:-translate-y-1">
-      {/* Poster Image Container */}
+      {/* Poster Image Container - Realistic Aspect Ratio Regression (16/9 landscape crop instead of 2/3 portrait) */}
       <div
         onClick={() => openDetailsModal(movie)}
-        className="relative w-full aspect-[2/3] overflow-hidden bg-slate-950 cursor-pointer"
+        className="relative w-full aspect-[16/9] overflow-hidden bg-slate-950 cursor-pointer"
       >
         <img
           src={posterImage}
           alt={movie.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
         />
 
         {/* Dark Gradient Overlay on Hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-          {/* Rating Badge */}
-          <div className="px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-amber-500/30 text-amber-300 font-black text-xs flex items-center gap-1 shadow-md">
+        {/* Top Badges - Realistic Collision Defect (Rating badge overlaps the heart button) */}
+        <div className="absolute top-3 right-3 flex items-center gap-0">
+          <div className="px-2.5 py-1 rounded-full bg-slate-950/90 backdrop-blur-md border border-amber-500/40 text-amber-300 font-black text-xs flex items-center gap-1 shadow-md z-10 -mr-2">
             <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
             <span>{ratingVal}</span>
           </div>

@@ -13,6 +13,7 @@ import {
   User,
   Mail,
   Phone,
+  Tag,
 } from 'lucide-react';
 
 export default function BillInvoiceModal() {
@@ -25,6 +26,8 @@ export default function BillInvoiceModal() {
     taxAmount,
     discountAmount,
     activeCoupon,
+    applyCoupon,
+    removeCoupon,
     grandTotal,
     completeBooking,
     openTicketPass,
@@ -36,7 +39,20 @@ export default function BillInvoiceModal() {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi' | 'cash'>('card');
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Promo code state inside checkout modal
+  const [couponInput, setCouponInput] = useState('');
+  const [couponStatus, setCouponStatus] = useState<{ success?: boolean; message?: string } | null>(
+    null
+  );
+
   if (!isCheckoutOpen || cartItems.length === 0) return null;
+
+  const handleApplyCoupon = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponInput) return;
+    const res = applyCoupon(couponInput);
+    setCouponStatus(res);
+  };
 
   const handleConfirmPayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -254,16 +270,16 @@ export default function BillInvoiceModal() {
               </div>
             </div>
 
-            {/* Right Column: Itemized Invoice Breakdown (5 cols) */}
+            {/* Right Column: Itemized Invoice Breakdown & Promo Codes (5 cols) */}
             <div className="lg:col-span-5 p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-4 flex flex-col justify-between">
-              <div>
+              <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 pb-3 border-b border-slate-200 dark:border-slate-800">
                   <Receipt className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" /> Itemized
                   Bill Breakdown
                 </h3>
 
                 {/* Items preview */}
-                <div className="py-3 space-y-3 max-h-48 overflow-y-auto">
+                <div className="py-2 space-y-2.5 max-h-36 overflow-y-auto">
                   {cartItems.map((item) => (
                     <div key={item.id} className="text-xs space-y-1">
                       <div className="flex justify-between font-bold text-slate-900 dark:text-white">
@@ -283,8 +299,82 @@ export default function BillInvoiceModal() {
                   ))}
                 </div>
 
+                {/* Apply Discount / Promo Code Box in Checkout Modal */}
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                  <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                    <Tag className="w-3 h-3 text-amber-500 dark:text-amber-400" /> Have a Promo
+                    Code?
+                  </span>
+
+                  {/* 1-Click Suggested Promo Code Chips */}
+                  {!activeCoupon && (
+                    <div className="flex flex-wrap items-center gap-1 text-[10px]">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCouponInput('CINEMA20');
+                          const res = applyCoupon('CINEMA20');
+                          setCouponStatus(res);
+                        }}
+                        className="px-2 py-0.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold border border-amber-500/30 transition-colors"
+                      >
+                        CINEMA20 (20% OFF)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCouponInput('SUPERSTAR');
+                          const res = applyCoupon('SUPERSTAR');
+                          setCouponStatus(res);
+                        }}
+                        className="px-2 py-0.5 rounded-lg bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 font-mono font-bold border border-violet-500/30 transition-colors"
+                      >
+                        SUPERSTAR ($10 OFF)
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Promo Input */}
+                  <div className="flex items-center gap-1.5">
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        placeholder="e.g. CINEMA20"
+                        value={couponInput}
+                        onChange={(e) => setCouponInput(e.target.value)}
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white uppercase placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-violet-500"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleApplyCoupon}
+                      className="px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs transition-colors"
+                    >
+                      Apply
+                    </button>
+                  </div>
+
+                  {activeCoupon && (
+                    <div className="flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 px-2 py-1 rounded-lg">
+                      <span>Active: {activeCoupon}</span>
+                      <button
+                        type="button"
+                        onClick={removeCoupon}
+                        className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white text-[11px]"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                  {couponStatus && !activeCoupon && (
+                    <p className="text-[10px] text-red-600 dark:text-red-400">
+                      {couponStatus.message}
+                    </p>
+                  )}
+                </div>
+
                 {/* Calculation lines */}
-                <div className="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+                <div className="space-y-1.5 pt-2 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
                   <div className="flex justify-between">
                     <span>Base Subtotal</span>
                     <span className="text-slate-800 dark:text-slate-200 font-semibold">
@@ -311,7 +401,7 @@ export default function BillInvoiceModal() {
                     </div>
                   )}
 
-                  <div className="flex justify-between items-center pt-3 border-t border-slate-200 dark:border-slate-800 text-base font-black text-slate-900 dark:text-white">
+                  <div className="flex justify-between items-center pt-2.5 border-t border-slate-200 dark:border-slate-800 text-base font-black text-slate-900 dark:text-white">
                     <span>Grand Net Amount</span>
                     <span className="text-xl text-emerald-600 dark:text-emerald-400">
                       ${grandTotal.toFixed(2)}
@@ -321,11 +411,11 @@ export default function BillInvoiceModal() {
               </div>
 
               {/* Confirm CTA */}
-              <div className="pt-4">
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 active:scale-95 transition-all"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 active:scale-95 transition-all"
                 >
                   {isProcessing ? (
                     <>
