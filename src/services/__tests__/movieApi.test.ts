@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import {
   getMovieTrailer,
   extractUniqueGenres,
@@ -32,12 +32,13 @@ const mockMovies: Movie[] = [
     _embedded: {
       cast: [
         {
+          id: 1,
           person: {
             id: 501,
             name: 'Matthew McConaughey',
             gender: 'Male',
             birthday: '1969-11-04',
-            country: { name: 'USA', code: 'US', timezone: 'America/New_York' },
+            country: { name: 'USA', code: 'US' },
           },
           character: { id: 601, name: 'Cooper' },
         },
@@ -64,6 +65,7 @@ const mockMovies: Movie[] = [
     _embedded: {
       cast: [
         {
+          id: 2,
           person: {
             id: 502,
             name: 'Kenji Sato',
@@ -133,6 +135,7 @@ describe('movieApi Service Unit Tests', () => {
           _embedded: {
             cast: [
               {
+                id: 3,
                 person: {
                   id: 501,
                   name: 'Matthew McConaughey',

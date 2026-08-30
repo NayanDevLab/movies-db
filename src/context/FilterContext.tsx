@@ -127,7 +127,6 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-
 export const useFilters = () => {
   const context = useContext(FilterContext);
   if (!context) {
@@ -135,4 +134,3 @@ export const useFilters = () => {
   }
   return context;
 };
-

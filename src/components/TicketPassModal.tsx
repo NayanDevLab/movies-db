@@ -96,7 +96,11 @@ export default function TicketPassModal() {
               )}
 
               {/* Movie Title & Logistics */}
-              <div className={movie?.image?.medium ? 'sm:col-span-9 space-y-3' : 'sm:col-span-12 space-y-3'}>
+              <div
+                className={
+                  movie?.image?.medium ? 'sm:col-span-9 space-y-3' : 'sm:col-span-12 space-y-3'
+                }
+              >
                 <div>
                   <span className="text-[10px] uppercase font-bold text-violet-400 tracking-widest">
                     Admit Ticket Holder

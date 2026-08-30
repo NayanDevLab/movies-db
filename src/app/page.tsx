@@ -100,7 +100,6 @@ export default function HomePage() {
     };
   }, [selectedActorProfile]);
 
-
   // Extract Genres, Languages & Actors dynamically from live fetched movies
   const availableGenres = useMemo(() => extractUniqueGenres(allMovies), [allMovies]);
   const availableLanguages = useMemo(() => extractUniqueLanguages(allMovies), [allMovies]);
@@ -113,7 +112,8 @@ export default function HomePage() {
     // 1. Industry / Media Type Filter
     if (filters.selectedIndustry === 'hollywood') {
       result = result.filter(
-        (m) => m.industry === 'Hollywood' || (m.language === 'English' && m.mediaType !== 'Web Series')
+        (m) =>
+          m.industry === 'Hollywood' || (m.language === 'English' && m.mediaType !== 'Web Series')
       );
     } else if (filters.selectedIndustry === 'bollywood') {
       result = result.filter(
@@ -157,11 +157,11 @@ export default function HomePage() {
     } else if (filters.selectedCategory === 'top-rated') {
       result = result.filter((m) => m.rating?.average && m.rating.average >= 8.0);
     } else if (filters.selectedCategory === 'trending') {
-      result = result.filter((m) => (m.weight && m.weight > 60) || (m.rating?.average && m.rating.average >= 7.8));
-    } else if (filters.selectedCategory === 'premieres') {
       result = result.filter(
-        (m) => m.premiered && parseInt(m.premiered.slice(0, 4), 10) >= 2020
+        (m) => (m.weight && m.weight > 60) || (m.rating?.average && m.rating.average >= 7.8)
       );
+    } else if (filters.selectedCategory === 'premieres') {
+      result = result.filter((m) => m.premiered && parseInt(m.premiered.slice(0, 4), 10) >= 2020);
     }
 
     // 4. Genre Filter
@@ -173,9 +173,7 @@ export default function HomePage() {
 
     // 5. Minimum Rating Filter
     if (filters.minRating > 0) {
-      result = result.filter(
-        (m) => m.rating?.average && m.rating.average >= filters.minRating
-      );
+      result = result.filter((m) => m.rating?.average && m.rating.average >= filters.minRating);
     }
 
     // 6. Actor Filter
@@ -186,9 +184,7 @@ export default function HomePage() {
           c.person?.name.toLowerCase().includes(filters.selectedActor.toLowerCase())
         );
         // Or match in summary/keywords
-        const hasSummary = m.summary
-          ?.toLowerCase()
-          .includes(filters.selectedActor.toLowerCase());
+        const hasSummary = m.summary?.toLowerCase().includes(filters.selectedActor.toLowerCase());
         return hasCast || hasSummary;
       });
     }
@@ -207,7 +203,6 @@ export default function HomePage() {
         return yearB - yearA;
       });
     }
-
 
     return result;
   }, [allMovies, filters]);
@@ -237,7 +232,6 @@ export default function HomePage() {
           availableActors={availableActors}
           totalResults={filteredMovies.length}
         />
-
 
         {/* Loading Skeletons */}
         {isLoading && (
@@ -315,8 +309,8 @@ export default function HomePage() {
                 </span>
               </div>
               <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
-                Next-generation movie exploration & ticketing experience. Browse thousands of
-                movies with verified cast members, real-time filters, interactive cinema seating, and
+                Next-generation movie exploration & ticketing experience. Browse thousands of movies
+                with verified cast members, real-time filters, interactive cinema seating, and
                 instant billing.
               </p>
               <div className="flex items-center gap-3 pt-1">

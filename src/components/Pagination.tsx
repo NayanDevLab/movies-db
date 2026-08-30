@@ -23,11 +23,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
   const getPageNumbers = () => {
     const delta = 2;
     const range: number[] = [];
-    for (
-      let i = Math.max(2, page - delta);
-      i <= Math.min(totalPages - 1, page + delta);
-      i++
-    ) {
+    for (let i = Math.max(2, page - delta); i <= Math.min(totalPages - 1, page + delta); i++) {
       range.push(i);
     }
 

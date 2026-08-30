@@ -8,11 +8,7 @@ export const metadata: Metadata = {
     'Discover trending movies, explore actor/actress cast details, apply advanced filters, select cinema seats, generate itemized bills, and book digital movie passes.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen bg-[#0b0f19] text-slate-100 antialiased flex flex-col">

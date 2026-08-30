@@ -19,7 +19,7 @@ interface CartContextType {
   applyCoupon: (code: string) => { success: boolean; message: string };
   removeCoupon: () => void;
   clearCart: () => void;
-  
+
   // Watchlist & Favorites
   watchlist: Movie[];
   toggleWatchlist: (movie: Movie) => void;
@@ -66,7 +66,7 @@ interface CartContextType {
   }) => BillInvoice;
 
   bookingHistory: BillInvoice[];
-  
+
   // Pricing Totals
   subtotal: number;
   convenienceFee: number;
@@ -74,7 +74,6 @@ interface CartContextType {
   grandTotal: number;
   totalSeatsCount: number;
 }
-
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -84,7 +83,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [activeCoupon, setActiveCoupon] = useState<string | null>(null);
   const [discountPercent, setDiscountPercent] = useState<number>(0);
   const [flatDiscount, setFlatDiscount] = useState<number>(0);
-  
+
   const [selectedMovieForBooking, setSelectedMovieForBooking] = useState<Movie | null>(null);
   const [selectedMovieForDetails, setSelectedMovieForDetails] = useState<Movie | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -245,10 +244,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         if (item.id !== itemId) return item;
 
         const updatedSnacks = item.snacks
-          .map((s) => (s.snack.id === snackId ? { ...s, quantity: Math.max(0, s.quantity + delta) } : s))
+          .map((s) =>
+            s.snack.id === snackId ? { ...s, quantity: Math.max(0, s.quantity + delta) } : s
+          )
           .filter((s) => s.quantity > 0);
 
-        const snacksSubtotal = updatedSnacks.reduce((sum, s) => sum + s.snack.price * s.quantity, 0);
+        const snacksSubtotal = updatedSnacks.reduce(
+          (sum, s) => sum + s.snack.price * s.quantity,
+          0
+        );
         const totalItemPrice = item.seatSubtotal + snacksSubtotal;
 
         return {
@@ -296,18 +300,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // Calculations
   const subtotal = cartItems.reduce((sum, item) => sum + item.totalItemPrice, 0);
   const totalSeatsCount = cartItems.reduce((sum, item) => sum + item.seats.length, 0);
-  
+
   // Convenience fee: $1.50 per seat booked
   const convenienceFee = totalSeatsCount > 0 ? Number((totalSeatsCount * 1.5).toFixed(2)) : 0;
-  
+
   // Tax: 10% on subtotal
   const taxAmount = Number(((subtotal + convenienceFee) * 0.1).toFixed(2));
-  
+
   // Discount calculation
   const calculatedPercentDiscount = discountPercent > 0 ? (subtotal * discountPercent) / 100 : 0;
   const discountAmount = Number((calculatedPercentDiscount + flatDiscount).toFixed(2));
 
-  const grandTotal = Math.max(0, Number((subtotal + convenienceFee + taxAmount - discountAmount).toFixed(2)));
+  const grandTotal = Math.max(
+    0,
+    Number((subtotal + convenienceFee + taxAmount - discountAmount).toFixed(2))
+  );
 
   const completeBooking = (customer: {
     name: string;
@@ -413,7 +420,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     </CartContext.Provider>
   );
 };
-
 
 export const useCart = () => {
   const context = useContext(CartContext);

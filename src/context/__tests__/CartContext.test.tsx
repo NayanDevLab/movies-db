@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import React from 'react';
 import { renderHook, act } from '@testing-library/react';
 import { CartProvider, useCart } from '../CartContext';
-import { Movie, CartBookingItem } from '../../types/movie';
+import { Movie, CartBookingItem, BillInvoice } from '../../types/movie';
 
 const mockMovie: Movie = {
   id: 1,
@@ -30,8 +30,8 @@ const mockBookingItem: CartBookingItem = {
   showTime: '07:30 PM',
   cinemaHall: 'Grand IMAX Laser 4K',
   seats: [
-    { row: 'E', number: 5, type: 'vip', price: 18 },
-    { row: 'E', number: 6, type: 'vip', price: 18 },
+    { id: 'E-5', row: 'E', number: 5, tier: 'vip', price: 18 },
+    { id: 'E-6', row: 'E', number: 6, tier: 'vip', price: 18 },
   ],
   snacks: [
     {
@@ -180,7 +180,7 @@ describe('CartContext Unit Tests', () => {
       result.current.addBookingToCart(mockBookingItem);
     });
 
-    let invoice: any;
+    let invoice: BillInvoice | undefined;
     act(() => {
       invoice = result.current.completeBooking({
         name: 'Jordan Smith',
@@ -191,9 +191,9 @@ describe('CartContext Unit Tests', () => {
     });
 
     expect(invoice).toBeDefined();
-    expect(invoice.bookingId).toContain('CINE-');
-    expect(invoice.customerName).toBe('Jordan Smith');
-    expect(invoice.items.length).toBe(1);
+    expect(invoice?.bookingId).toContain('CINE-');
+    expect(invoice?.customerName).toBe('Jordan Smith');
+    expect(invoice?.items.length).toBe(1);
 
     // Cart is cleared after booking completion
     expect(result.current.cartItems.length).toBe(0);

@@ -18,8 +18,10 @@ export const INITIAL_REVIEWS: Record<number, Review[]> = {
       author: 'David K. (Film Critic)',
       rating: 9.5,
       date: 'Aug 28, 2026',
-      content: 'A breathtaking emotional and visual triumph with exceptional production values and storytelling.',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
+      content:
+        'A breathtaking emotional and visual triumph with exceptional production values and storytelling.',
+      avatar:
+        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80',
       verified: true,
     },
     {
@@ -27,8 +29,10 @@ export const INITIAL_REVIEWS: Record<number, Review[]> = {
       author: 'Sophia Chen',
       rating: 9.0,
       date: 'Aug 29, 2026',
-      content: 'Incredible cinematography and compelling character arcs. 10/10 recommendation for the big screen!',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+      content:
+        'Incredible cinematography and compelling character arcs. 10/10 recommendation for the big screen!',
+      avatar:
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
       verified: true,
     },
   ],
@@ -135,10 +139,14 @@ function normalizeLiveShow(show: any): Movie {
     officialSite: show.officialSite,
     rating: show.rating || { average: 8.0 },
     image: show.image || {
-      medium: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=80',
-      original: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80',
+      medium:
+        'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=80',
+      original:
+        'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80',
     },
-    summary: show.summary || '<p>An extraordinary cinematic experience featuring award-winning performances and captivating storytelling.</p>',
+    summary:
+      show.summary ||
+      '<p>An extraordinary cinematic experience featuring award-winning performances and captivating storytelling.</p>',
     updated: show.updated,
     _embedded: show._embedded,
     industry,
@@ -310,10 +318,7 @@ export async function searchActors(query: string): Promise<ActorProfile[]> {
 /**
  * Fetch all movies/shows starring a specific actor 100% LIVE from API
  */
-export async function fetchMoviesByActorId(
-  personId: number,
-  actorName: string
-): Promise<Movie[]> {
+export async function fetchMoviesByActorId(personId: number, actorName: string): Promise<Movie[]> {
   try {
     // 1. Query live cast credits
     const res = await fetch(`${TVMAZE_API_BASE}/people/${personId}/castcredits?embed=show`);
@@ -328,7 +333,9 @@ export async function fetchMoviesByActorId(
 
     // 2. If cast credits were empty or minimal, also search show titles by actor name
     if (liveShows.length === 0 && actorName) {
-      const searchRes = await fetch(`${TVMAZE_API_BASE}/search/shows?q=${encodeURIComponent(actorName)}`);
+      const searchRes = await fetch(
+        `${TVMAZE_API_BASE}/search/shows?q=${encodeURIComponent(actorName)}`
+      );
       if (searchRes.ok) {
         const searchData = await searchRes.json();
         liveShows = searchData

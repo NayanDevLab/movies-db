@@ -39,7 +39,6 @@ export interface ActorProfile {
   } | null;
 }
 
-
 export interface Movie {
   id: number;
   name: string;
@@ -109,7 +108,6 @@ export interface FilterState {
   page: number;
   itemsPerPage: number;
 }
-
 
 export type SeatTier = 'standard' | 'gold' | 'vip';
 

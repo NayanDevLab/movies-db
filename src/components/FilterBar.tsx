@@ -177,9 +177,7 @@ export default function FilterBar({
                     </span>
                   )}
                   <span>{star.name}</span>
-                  {star.gender === 'Female' && (
-                    <span className="text-[10px] text-pink-300">★</span>
-                  )}
+                  {star.gender === 'Female' && <span className="text-[10px] text-pink-300">★</span>}
                 </button>
               );
             })}
@@ -327,10 +325,8 @@ export default function FilterBar({
               </h3>
               <p className="text-xs text-slate-400">
                 {selectedActorProfile.country?.name ? `${selectedActorProfile.country.name}` : ''}
-                {selectedActorProfile.birthday
-                  ? ` • Born ${selectedActorProfile.birthday}`
-                  : ''}{' '}
-                • Showing {totalResults} live {totalResults === 1 ? 'title' : 'titles'}
+                {selectedActorProfile.birthday ? ` • Born ${selectedActorProfile.birthday}` : ''} •
+                Showing {totalResults} live {totalResults === 1 ? 'title' : 'titles'}
               </p>
             </div>
           </div>
@@ -393,10 +389,7 @@ export default function FilterBar({
           {filters.minRating > 0 && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-900/40 text-amber-300 border border-amber-700/50">
               Rating: {filters.minRating}+ ★
-              <button
-                onClick={() => setMinRating(0)}
-                className="hover:text-white font-bold ml-1"
-              >
+              <button onClick={() => setMinRating(0)} className="hover:text-white font-bold ml-1">
                 ✕
               </button>
             </span>
