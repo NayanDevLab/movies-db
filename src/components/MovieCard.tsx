@@ -3,15 +3,21 @@
 import React from 'react';
 import { Movie } from '../types/movie';
 import { useCart } from '../context/CartContext';
-import { Star, Clock, Ticket, Info, Play, Heart } from 'lucide-react';
+import { Star, Clock, Ticket, Info, Play, Heart, Share2 } from 'lucide-react';
 
 interface MovieCardProps {
   movie: Movie;
 }
 
 export default function MovieCard({ movie }: MovieCardProps) {
-  const { openBookingModal, openDetailsModal, openTrailerModal, watchlist, toggleWatchlist } =
-    useCart();
+  const {
+    openBookingModal,
+    openDetailsModal,
+    openTrailerModal,
+    openShareModal,
+    watchlist,
+    toggleWatchlist,
+  } = useCart();
 
   const isFavorite = watchlist.some((m) => m.id === movie.id);
 
@@ -142,6 +148,14 @@ export default function MovieCard({ movie }: MovieCardProps) {
             title="Watch Trailer"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
+          </button>
+
+          <button
+            onClick={() => openShareModal(movie)}
+            className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-violet-500 dark:hover:text-violet-400 border border-slate-200 dark:border-slate-700 text-xs transition-colors"
+            title="Share Movie"
+          >
+            <Share2 className="w-3.5 h-3.5" />
           </button>
 
           <button

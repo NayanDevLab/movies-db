@@ -11,6 +11,7 @@ import BillInvoiceModal from './BillInvoiceModal';
 import TicketPassModal from './TicketPassModal';
 import TrailerModal from './TrailerModal';
 import WatchlistModal from './WatchlistModal';
+import MovieShareModal from './MovieShareModal';
 
 export default function ClientProviders({ children }: { children: ReactNode }) {
   return (
@@ -26,6 +27,7 @@ export default function ClientProviders({ children }: { children: ReactNode }) {
           <TicketPassModal />
           <TrailerModal />
           <WatchlistModal />
+          <MovieShareModal />
         </CartProvider>
       </FilterProvider>
     </ThemeProvider>

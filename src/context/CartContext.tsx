@@ -33,6 +33,10 @@ interface CartContextType {
   openTrailerModal: (movie: Movie) => void;
   closeTrailerModal: () => void;
 
+  selectedShareMovie: Movie | null;
+  openShareModal: (movie: Movie) => void;
+  closeShareModal: () => void;
+
   // City Location
   selectedCity: string;
   setSelectedCity: (city: string) => void;
@@ -96,6 +100,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // Trailer Player State
   const [selectedTrailerMovie, setSelectedTrailerMovie] = useState<Movie | null>(null);
+
+  // Social Share State
+  const [selectedShareMovie, setSelectedShareMovie] = useState<Movie | null>(null);
 
   // City Location State
   const [selectedCity, setSelectedCity] = useState('New York');
@@ -189,6 +196,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const openTrailerModal = (movie: Movie) => setSelectedTrailerMovie(movie);
   const closeTrailerModal = () => setSelectedTrailerMovie(null);
 
+  // Social Share Helpers
+  const openShareModal = (movie: Movie) => setSelectedShareMovie(movie);
+  const closeShareModal = () => setSelectedShareMovie(null);
+
   // Review Helpers
   const addReview = (
     movieId: number,
@@ -271,27 +282,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
     const cleanCode = code.trim().toUpperCase();
 
-    if (cleanCode.includes('20') || cleanCode === 'CINEMA20') {
+    if (cleanCode === 'CINEMA20') {
       setActiveCoupon('CINEMA20');
       setDiscountPercent(20);
       setFlatDiscount(0);
       return { success: true, message: '🎉 20% discount applied successfully!' };
-    } else if (cleanCode.includes('10') || cleanCode === 'SUPERSTAR') {
+    } else if (cleanCode === 'SUPERSTAR') {
       setActiveCoupon('SUPERSTAR');
       setDiscountPercent(0);
       setFlatDiscount(10);
       return { success: true, message: '🌟 $10 flat discount applied!' };
-    } else if (cleanCode.includes('15') || cleanCode === 'FIRSTSHOW') {
+    } else if (cleanCode === 'FIRSTSHOW') {
       setActiveCoupon('FIRSTSHOW');
       setDiscountPercent(15);
       setFlatDiscount(0);
       return { success: true, message: '🍿 15% First Show promo applied!' };
     } else {
-      // General fallback for any code the user types
-      setActiveCoupon(cleanCode);
-      setDiscountPercent(10);
-      setFlatDiscount(0);
-      return { success: true, message: `🎉 ${cleanCode} applied with 10% discount!` };
+      return { success: false, message: 'Invalid promo code. Try "CINEMA20" or "SUPERSTAR"' };
     }
   };
 
@@ -320,10 +327,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const calculatedPercentDiscount = discountPercent > 0 ? (subtotal * discountPercent) / 100 : 0;
   const discountAmount = Number((calculatedPercentDiscount + flatDiscount).toFixed(2));
 
-  // Bug: Discount amount is inadvertently added to Grand Total instead of subtracted
   const grandTotal = Math.max(
     0,
-    Number((subtotal + convenienceFee + taxAmount + discountAmount).toFixed(2))
+    Number((subtotal + convenienceFee + taxAmount - discountAmount).toFixed(2))
   );
 
   const completeBooking = (customer: {
@@ -401,6 +407,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         selectedTrailerMovie,
         openTrailerModal,
         closeTrailerModal,
+        selectedShareMovie,
+        openShareModal,
+        closeShareModal,
         selectedCity,
         setSelectedCity,
         reviews,
