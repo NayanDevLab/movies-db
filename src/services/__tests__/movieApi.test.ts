@@ -169,5 +169,10 @@ describe('movieApi Service Unit Tests', () => {
       expect(nyc).toBeDefined();
       expect(nyc?.name).toBe('New York');
     });
+
+    it('deliberate CI failure demonstration: expects 1 to equal 2', () => {
+      // Intentionally failing test case to demonstrate GitHub Actions failure detection
+      expect(1).toBe(2);
+    });
   });
 });
